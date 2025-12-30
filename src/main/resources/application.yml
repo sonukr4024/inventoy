@@ -1,0 +1,122 @@
+spring:
+  application:
+    name: wholesaler-inventory-management
+
+  datasource:
+    url: jdbc:postgresql://localhost:54321/inventory_db
+    username: postgres
+    password: 4024
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10808
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:your-email@gmail.com}
+    password: ${MAIL_PASSWORD:your-app-password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 10
+        queue-capacity: 100
+      thread-name-prefix: async-exec-
+
+    scheduling:
+      pool:
+        size: 3
+      thread-name-prefix: scheduled-
+
+# Application specific configuration
+app:
+  jwt:
+    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    expiration-ms: 86400000  # 24 hours
+    refresh-expiration-ms: 604800000  # 7 days
+
+  face-recognition:
+    similarity-threshold: 0.6
+    max-face-images-per-customer: 5
+    async-processing: true
+
+  ai-report:
+    api-url: ${AI_API_URL:https://api.openai.com/v1/chat/completions}
+    api-key: ${AI_API_KEY:your-openai-api-key}
+    model: gpt-4
+    timeout-seconds: 30
+
+  notifications:
+    monthly-due-check-cron: 0 0 9 1 * ?  # Every 1st of month at 9 AM
+    email-retry-attempts: 3
+    from-email: ${FROM_EMAIL:noreply@wholesaler.com}
+    from-name: Wholesaler Inventory System
+
+  inventory:
+    low-stock-threshold: 10
+
+# Logging configuration
+logging:
+  level:
+    root: INFO
+    com.wholesaler.inventory: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/application.log
+    max-size: 10MB
+    max-history: 30
+
+# Swagger/OpenAPI configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+    disable-swagger-default-url: true
+
+server:
+  port: 9090
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
