@@ -6,6 +6,7 @@ public enum Unit {
     LITRE,
     ML,
     PIECE,
+    PCS,
     DOZEN,
     BOX
 }

@@ -63,12 +63,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
-                        
+
                         // Admin only endpoints
                         .requestMatchers(HttpMethod.POST, "/api/users/register").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN")
                         .requestMatchers("/api/reports/**").hasAnyRole("ADMIN", "STAFF")
-                        
+
                         // All other endpoints require authentication
                         .anyRequest().authenticated()
                 )

@@ -50,6 +50,7 @@ public class AuthService {
                 .role(request.getRole())
                 .isLocked(false)
                 .failedLoginAttempts(0)
+                .isInvited(true)  // Mark as invited since only admins can register users
                 .build();
 
         user = userRepository.save(user);

@@ -1,5 +1,6 @@
 package com.wholesaler.inventory.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,5 +26,6 @@ public class Category extends BaseEntity {
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     @Builder.Default
+    @JsonIgnore
     private List<Product> products = new ArrayList<>();
 }

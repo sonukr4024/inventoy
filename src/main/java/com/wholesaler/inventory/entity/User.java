@@ -40,4 +40,7 @@ public class User extends BaseEntity {
 
     @Column(name = "failed_login_attempts")
     private Integer failedLoginAttempts = 0;
+
+    @Column(name = "is_invited")
+    private Boolean isInvited = false;
 }

@@ -1,5 +1,6 @@
 package com.wholesaler.inventory.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wholesaler.inventory.enums.Unit;
 import jakarta.persistence.*;
 import lombok.*;
@@ -57,9 +58,11 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @Builder.Default
+    @JsonIgnore
     private List<RateHistory> rateHistories = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @Builder.Default
+    @JsonIgnore
     private List<BillItem> billItems = new ArrayList<>();
 }
